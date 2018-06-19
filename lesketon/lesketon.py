@@ -407,6 +407,7 @@ class gameplayer:
 		self.commandtype = False
 		self.lastmessage = None
 		self.channel = None
+		self.ready = False
 	def updateMessage(self, fstr):
 		self.lastmessage = fstr
 	def inCommandMsg(self, channel):
@@ -521,6 +522,13 @@ class gamemaster:
 		for player in self.players:
 			if role.role not in self.players[player].player.roles:
 				await bot.add_roles(self.players[player].player, role.role)
+
+
+class GameRoom:
+	"""
+	This class holds all the specific variables for any given room; what can still be taken from it...
+	TODO: what the hell does a room need, actually.
+	"""
 
 sys.stdout = io.TextIOWrapper(	# this is a workaround so I can run it in powershell because I'm lazy
 		sys.stdout.detach(),
@@ -782,6 +790,13 @@ async def giveitem(ctx):
 			bc.dsay()
 	else:
 		await bc.esay("You need to mention a player to give an item to.")
+
+@bot.command(pass_context=True)
+async def ready(ctx)
+	player = bc.player
+	player.ready = !player.ready
+
+
 
 if '-test' in sys.argv:
 	bot.run("TEST VERSION OF THE BOT'S TOKEN GOES HERE")
