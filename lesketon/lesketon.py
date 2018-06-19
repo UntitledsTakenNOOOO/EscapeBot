@@ -793,8 +793,9 @@ async def giveitem(ctx):
 
 @bot.command(pass_context=True)
 async def ready(ctx):
+	bc = botcommand(ctx)
 	player = bc.player
-	player.ready != player.ready
+	player.ready = not player.ready
 
 
 
