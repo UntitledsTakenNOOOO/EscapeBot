@@ -21,22 +21,26 @@ import logging
 import shutil
 import aiohttp
 from copy import deepcopy
+from .gamerole import GameRole
 
 
-class GameRole:
+class ItemRole(GameRole):
     """
-    This is the base class for role types; will carry info on whether the role counts as an item,
-    the item's use function, etc. Attributes can be passed down using object inheritance.
+    For the item roles, you'll pass an asynchronous function down through set_use, with no ().
+    Then, when someone uses an item, you simply run it as
 
-    botv must be loaded for this to work! Never invoke this before botv is created in on_ready!
-    Ideally, the gamemaster object below will be the one to invoke this, because the gamemaster isn't
-    created until botv is done.
+    await <itemrole>.use(ctx)
+
+    and otherwise treat it like a normal session/command. If you want a more dedicated session
+    system like HaruBot's, I can do that, but it's a lot more moving parts for little benefit
+    so long as item uses aren't incredibly complex.
+
+    You can also just add a task to the bot.loop() with this, so you can inject more stability into
+    it where absolutely necessary if you go the lazy route.
     """
 
-    def __init__(self, role):
-        self.role = role
-        self.name = role.name
-
-    @property
     def is_item(self):
-        return False
+        return True
+
+    def set_use(func):
+        self.use = func

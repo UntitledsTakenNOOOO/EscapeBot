@@ -22,6 +22,7 @@ import shutil
 import aiohttp
 from copy import deepcopy
 from .gamerole import GameRole
+from .itemrole import ItemRole
 
 # ngl pretty much just copypasted harubot
 
@@ -419,28 +420,6 @@ class InCommandError(RoomEscapeError):
         return False
 
 
-class itemrole(GameRole):
-    """
-    For the item roles, you'll pass an asynchronous function down through setUse, with no ().
-    Then, when someone uses an item, you simply run it as 
-    
-    await <itemrole>.use(ctx)
-    
-    and otherwise treat it like a normal session/command. If you want a more dedicated session
-    system like HaruBot's, I can do that, but it's a lot more moving parts for little benefit
-    so long as item uses aren't incredibly complex.
-    
-    You can also just add a task to the bot.loop() with this, so you can inject more stability into
-    it where absolutely necessary if you go the lazy route.
-    """
-
-    def isItem(self):
-        return True
-
-    def setUse(func):
-        self.use = func
-
-
 class gameplayer:
     def __init__(self, player):
         self.id = player.id
@@ -556,7 +535,7 @@ class gamemaster:
         for x in range(len(self.accessroles)):
             self.accessroles[x] = GameRole(self.accessroles[x])
         for x in range(len(self.itemroles)):
-            self.itemroles[x] = itemrole(self.itemroles[x])
+            self.itemroles[x] = ItemRole(self.itemroles[x])
 
     def save(self):
         pass
@@ -758,8 +737,8 @@ async def listroles():
         for accessrole in botv.accessroles:
             if role == accessrole.role:
                 fstr += " (appears to be an access role)"
-        for itemrole in botv.itemroles:
-            if role == itemrole.role:
+        for ItemRole in botv.itemroles:
+            if role == ItemRole.role:
                 fstr += " (appears to be an item role)"
         fstr += "\n"
     fstr += "```"
