@@ -14,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="lesketon.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="lesketon.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lesketon/lesketon.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="29" column="7" lean-forward="true" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
+            <state relative-caret-position="262">
+              <caret line="474" column="15" selection-start-line="474" selection-start-column="11" selection-end-line="474" selection-end-column="15" />
               <folding>
                 <element signature="e#60#98#0" expanded="true" />
               </folding>
@@ -26,14 +26,32 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="itemrole.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lesketon/itemrole.py">
+      <file leaf-file-name="gamemaster.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lesketon/gamemaster.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="37" column="24" selection-start-line="37" selection-start-column="24" selection-end-line="37" selection-end-column="24" />
+            <state relative-caret-position="357">
+              <caret line="39" column="29" lean-forward="true" selection-start-line="39" selection-start-column="29" selection-end-line="39" selection-end-column="29" />
               <folding>
                 <element signature="e#76#114#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gameplayer.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lesketon/gameplayer.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="33" lean-forward="true" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="itemrole.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lesketon/itemrole.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="23" selection-start-line="23" selection-end-line="23" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -46,7 +64,7 @@
       <file leaf-file-name="gamerole.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lesketon/gamerole.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
+            <state relative-caret-position="66">
               <caret line="4" column="18" lean-forward="true" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
             </state>
           </provider>
@@ -66,6 +84,10 @@
       <find>gamerole</find>
       <find>itemrole</find>
       <find>Item</find>
+      <find>gameplayer</find>
+      <find>GamePlayer</find>
+      <find>items</find>
+      <find>botv</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -76,9 +98,11 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/lesketon/__init__.py" />
-        <option value="$PROJECT_DIR$/lesketon/lesketon.py" />
         <option value="$PROJECT_DIR$/lesketon/gamerole.py" />
         <option value="$PROJECT_DIR$/lesketon/itemrole.py" />
+        <option value="$PROJECT_DIR$/lesketon/lesketon.py" />
+        <option value="$PROJECT_DIR$/lesketon/gamemaster.py" />
+        <option value="$PROJECT_DIR$/lesketon/gameplayer.py" />
       </list>
     </option>
   </component>
@@ -163,18 +187,19 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1296" height="1000" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4982699" visible="true" weight="0.24960254" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4988399" visible="true" weight="0.24960254" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.32946634" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32946634" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Python Console" />
       <window_info id="Structure" order="1" sideWeight="0.5011601" side_tool="true" weight="0.24960254" />
       <window_info anchor="bottom" id="Terminal" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info id="Favorites" sideWeight="0.5017301" side_tool="true" visible="true" weight="0.24960254" />
+      <window_info id="Favorites" sideWeight="0.5011601" side_tool="true" visible="true" weight="0.24960254" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -192,28 +217,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lesketon/gamerole.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
+        <state relative-caret-position="66">
           <caret line="4" column="18" lean-forward="true" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lesketon/itemrole.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="37" column="24" selection-start-line="37" selection-start-column="24" selection-end-line="37" selection-end-column="24" />
+        <state relative-caret-position="391">
+          <caret line="23" selection-start-line="23" selection-end-line="23" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lesketon/lesketon.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="474" column="15" selection-start-line="474" selection-start-column="11" selection-end-line="474" selection-end-column="15" />
+          <folding>
+            <element signature="e#60#98#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lesketon/gamemaster.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="39" column="29" lean-forward="true" selection-start-line="39" selection-start-column="29" selection-end-line="39" selection-end-column="29" />
           <folding>
             <element signature="e#76#114#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lesketon/lesketon.py">
+    <entry file="file://$PROJECT_DIR$/lesketon/gameplayer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="29" column="7" lean-forward="true" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
-          <folding>
-            <element signature="e#60#98#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="102">
+          <caret line="6" column="33" lean-forward="true" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
         </state>
       </provider>
     </entry>

@@ -29,7 +29,7 @@ class GameRole:
     the item's use function, etc. Attributes can be passed down using object inheritance.
 
     botv must be loaded for this to work! Never invoke this before botv is created in on_ready!
-    Ideally, the gamemaster object below will be the one to invoke this, because the gamemaster isn't
+    Ideally, the GameMaster object below will be the one to invoke this, because the GameMaster isn't
     created until botv is done.
     """
 

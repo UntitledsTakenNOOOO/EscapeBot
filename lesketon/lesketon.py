@@ -23,6 +23,8 @@ import aiohttp
 from copy import deepcopy
 from .gamerole import GameRole
 from .itemrole import ItemRole
+from .gameplayer import GamePlayer
+from .gamemaster import GameMaster
 
 # ngl pretty much just copypasted harubot
 
@@ -110,14 +112,14 @@ class botcommand:
         wait for messages.
         """
         self.setdefaults(ctx, ctype)
-        self.player = botv.gm.getPlayer(ctx.message.author.id)
+        self.player = botv.gm.get_player(ctx.message.author.id)
         if self.player.incommand:
             raise InCommandError
         if ctype.interrupts:
             self.player.startCommand(self)
         alist = ctx.message.content.split(' ')[1:]
         for obj in alist:
-            a = botv.gm.getPlayer(re.sub(r'[<@!>]', '', obj), mentioncheck=True)
+            a = botv.gm.get_player(re.sub(r'[<@!>]', '', obj), mentioncheck=True)
             if a:
                 self.mentions.append(a)
             else:
@@ -320,7 +322,7 @@ class botvars:
     botv.admins is just a list of ids, only referenced by the isAdmin command. This is, of course.
     so you can manually override and test things.
     
-    The information found by botvars will be fed into the gamemaster object, so that changing a role 
+    The information found by botvars will be fed into the GameMaster object, so that changing a role
     or an ID won't ruin a saved state.
     """
 
@@ -329,7 +331,7 @@ class botvars:
     def __init__(self, *, test=False):
         self.load()
         self.testver = test
-        self.gm = gamemaster(self)
+        self.gm = GameMaster(self)
 
     def load(self):
         if exists("server\\botv.haru"):
@@ -420,158 +422,6 @@ class InCommandError(RoomEscapeError):
         return False
 
 
-class gameplayer:
-    def __init__(self, player):
-        self.id = player.id
-        self.player = player
-        self.setdefaults()
-
-    def setdefaults(self):
-        self.incommand = False
-        self.commandtype = False
-        self.lastmessage = None
-        self.channel = None
-        self.ready = False
-
-    def updateMessage(self, fstr):
-        self.lastmessage = fstr
-
-    def inCommandMsg(self, channel):
-        """
-        only called if character is in a command
-        """
-        a = self.commandtype.interruptmsg
-        if "<channelline>" in a:
-            if channel == self.channel:
-                a = a.replace("<channelline>", "")
-            elif channel.name and not self.channel.name:
-                a = a.replace("<channelline>", " in PM")
-            else:
-                a = a.replace("<channelline>", " in {}".format(self.channel.name))
-        return (a)
-
-    @property
-    def items(self):
-        fl = []
-        for role in self.player.roles:
-            if role in botv.itemroles:
-                fl.append(role)
-        return fl
-
-    def itemlist(self, filter=None):
-        if not self.items:
-            return "You have no items."
-        fstr = "```json\n"
-        n = 0
-        for item in self.items:
-            n += 1
-            fstr += str(n) + " - " + item.name + "\n"
-        fstr += "```"
-        return fstr
-
-    def startCommand(self, command):
-        """
-        assumes command is valid
-        """
-        if command.type.interrupts:
-            self.incommand = command
-            self.commandtype = self.incommand.type
-            self.channel = command.channel
-
-    def endCommand(self, command):
-        if self.incommand is command:
-            self.incommand.end()
-            self.setdefaults()
-
-    async def giveItem(self, item, recip):
-        """ Assumes checks have been made! This can be altered to not do so. """
-        await
-        bot.remove_roles(self.player, item)
-        await
-        bot.add_roles(recip.player, item)
-
-    async def getRole(self, role):
-        if role not in self.player.roles:
-            await
-            bot.add_roles(self.player, role)
-
-    async def removeRole(self, role):
-        if role in self.player.roles:
-            await
-            bot.remove_roles(self.player, role)
-
-
-class gamemaster:
-    """
-    this class will hold all gamestate-related bot variables, and anything one might use to
-    change them. gamemaster has a seperate save() function to botv below -- its saves will be
-    used to restore the game state in case the need arises, such as if the internet flickers.
-    """
-
-    """ metafunctions """
-
-    def __init__(self, botv):
-        self.botv = botv
-        if exists("save\\save.haru"):
-            print("Gamemaster detected a saved session. Attempt to resume session? *(y/n)*")
-            yn = input(">")
-            if yn == 'y':
-                self.load(botv, session="save\\save.haru")
-        else:
-            self.load(botv)
-
-    def load(self, botv, *, session=False):
-        if session:
-            # CODE TO RESUME SESSION WILL GO HERE -- I can help with this if necessary
-            pass
-        else:
-            self.players = {}
-        self.accessroles = list(self.botv.accessroles)
-        self.itemroles = list(self.botv.itemroles)
-        self.rooms = list(self.botv.rooms)
-        self.server = botv.server
-
-    def deserialize(self):
-        for x in range(len(self.accessroles)):
-            self.accessroles[x] = GameRole(self.accessroles[x])
-        for x in range(len(self.itemroles)):
-            self.itemroles[x] = ItemRole(self.itemroles[x])
-
-    def save(self):
-        pass
-        # Save function goes here
-
-    def getPlayer(self, id, *, mentioncheck=False):
-        if id not in self.players:
-            print(id, self.players)
-            if mentioncheck:
-                return None
-            raise NonPlayerError
-        return self.players[id]
-
-    def addPlayer(self, player):
-        if player.id not in self.players:
-            self.players[player.id] = gameplayer(player)
-            return "New player ({}) successfully added.".format(player.id)
-        else:
-            return "Player of id {} already registered.".format(player.id)
-
-    async def massTakeRole(self, role):
-        """
-        Might want a try/catch
-        """
-        for player in self.players:
-            if role.role in self.players[player].player.roles:
-                await
-                bot.remove_roles(self.players[player].player, role.role)
-
-    async def massGiveRole(self, role):
-        for player in self.players:
-            if role.role not in self.players[player].player.roles:
-                await
-                bot.add_roles(self.players[player].player, role.role)
-
-
 sys.stdout = io.TextIOWrapper(  # this is a workaround so I can run it in powershell because I'm lazy
     sys.stdout.detach(),
     encoding=sys.stdout.encoding,
@@ -604,7 +454,7 @@ async def on_command_error(error, ctx):  # ask me if you need this explained
             bot.send_message(ctx.message.channel, error.msg)
         else:
             player = botv.gm.players[ctx.message.author.id]
-            msg = player.inCommandMsg(ctx.message.channel)
+            msg = player.in_command_msg(ctx.message.channel)
             await
             bot.send_message(ctx.message.channel, msg)
     elif isinstance(error, commands.CommandInvokeError):
@@ -779,7 +629,7 @@ async def addplayer(ctx):
         fcount = 0
         for player in ctx.message.mentions:
             fcount += 1
-            botv.gm.addPlayer(player)
+            botv.gm.add_player(player)
             fstr += player.name + "(" + player.id + ")\n"
         await
         bot.say(fstr.format(fcount))
