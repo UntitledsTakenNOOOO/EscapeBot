@@ -792,9 +792,9 @@ async def giveitem(ctx):
 		await bc.esay("You need to mention a player to give an item to.")
 
 @bot.command(pass_context=True)
-async def ready(ctx)
+async def ready(ctx):
 	player = bc.player
-	player.ready = !player.ready
+	player.ready != player.ready
 
 
 
