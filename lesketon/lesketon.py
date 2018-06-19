@@ -612,13 +612,6 @@ class gamemaster:
                 bot.add_roles(self.players[player].player, role.role)
 
 
-class GameRoom:
-    """
-    This class holds all the specific variables for any given room; what can still be taken from it...
-    TODO: what the hell does a room need, actually.
-    """
-
-
 sys.stdout = io.TextIOWrapper(  # this is a workaround so I can run it in powershell because I'm lazy
     sys.stdout.detach(),
     encoding=sys.stdout.encoding,
