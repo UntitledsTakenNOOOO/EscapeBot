@@ -21,7 +21,7 @@ import logging
 import shutil
 import aiohttp
 from copy import deepcopy
-
+from .gamerole import GameRole
 
 # ngl pretty much just copypasted harubot
 
@@ -419,26 +419,7 @@ class InCommandError(RoomEscapeError):
         return False
 
 
-class gamerole:
-    """
-    This is the base class for role types; will carry info on whether the role counts as an item,
-    the item's use function, etc. Attributes can be passed down using object inheritance.
-    
-    botv must be loaded for this to work! Never invoke this before botv is created in on_ready!
-    Ideally, the gamemaster object below will be the one to invoke this, because the gamemaster isn't
-    created until botv is done.
-    """
-
-    def __init__(self, role):
-        self.role = role
-        self.name = role.name
-
-    @property
-    def isItem(self):
-        return False
-
-
-class itemrole(gamerole):
+class itemrole(GameRole):
     """
     For the item roles, you'll pass an asynchronous function down through setUse, with no ().
     Then, when someone uses an item, you simply run it as 
@@ -573,7 +554,7 @@ class gamemaster:
 
     def deserialize(self):
         for x in range(len(self.accessroles)):
-            self.accessroles[x] = gamerole(self.accessroles[x])
+            self.accessroles[x] = GameRole(self.accessroles[x])
         for x in range(len(self.itemroles)):
             self.itemroles[x] = itemrole(self.itemroles[x])
 
