@@ -24,7 +24,6 @@ from copy import deepcopy
 from gameplayer import GamePlayer
 from itemrole import ItemRole
 from gamerole import GameRole
-import lesketon
 
 
 class GameMaster:
@@ -94,3 +93,6 @@ class GameMaster:
         for player in self.players:
             if role.role not in self.players[player].player.roles:
                 await lesketon.bot.add_roles(self.players[player].player, role.role)
+
+
+import lesketon

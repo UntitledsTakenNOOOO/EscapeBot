@@ -23,7 +23,6 @@ import aiohttp
 from copy import deepcopy
 from itemrole import ItemRole
 from gamerole import GameRole
-import lesketon
 
 
 class GamePlayer:
@@ -101,3 +100,6 @@ class GamePlayer:
     async def remove_role(self, role):
         if role in self.player.roles:
             await lesketon.bot.remove_roles(self.player, role)
+
+
+import lesketon
