@@ -21,10 +21,10 @@ import logging
 import shutil
 import aiohttp
 from copy import deepcopy
-from .gamerole import GameRole
-from .itemrole import ItemRole
-from .gameplayer import GamePlayer
-from .gamemaster import GameMaster
+from gamerole import GameRole
+from itemrole import ItemRole
+from gameplayer import GamePlayer
+from gamemaster import GameMaster
 
 # ngl pretty much just copypasted harubot
 
@@ -699,3 +699,5 @@ if '-test' in sys.argv:
     bot.run("TEST VERSION OF THE BOT'S TOKEN GOES HERE")
 else:
     bot.run('NDU2NTMwOTY2MzM3NTUyNDE1.DgN4aQ.ZRF8_sWj2V6_S25aSMiSV7SeQ7E')
+
+if __name__ == "__main__":
