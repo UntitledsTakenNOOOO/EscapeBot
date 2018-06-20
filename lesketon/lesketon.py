@@ -26,8 +26,14 @@ from itemrole import ItemRole
 from gameplayer import GamePlayer
 from gamemaster import GameMaster
 
-# ngl pretty much just copypasted harubot
 
+
+
+cfg = codecs.open('token.cfg', 'r', 'utf-8').read()
+token = cfg.split('\n')[0]
+
+
+# ngl pretty much just copypasted harubot
 def plurals(num):
     """
     returns s if plural or zero -- just a function I like to have around.
@@ -687,15 +693,13 @@ async def giveitem(ctx):
     else:
         await bc.esay("You need to mention a player to give an item to.")
 
-
 @bot.command(pass_context=True)
 async def ready(ctx):
     bc = botcommand(ctx)
     player = bc.player
     player.ready = not player.ready
 
-
 if '-test' in sys.argv:
     bot.run("TEST VERSION OF THE BOT'S TOKEN GOES HERE")
 else:
-    bot.run('NDU2NTMwOTY2MzM3NTUyNDE1.DgN4aQ.ZRF8_sWj2V6_S25aSMiSV7SeQ7E')
+    bot.run(token)
