@@ -699,5 +699,3 @@ if '-test' in sys.argv:
     bot.run("TEST VERSION OF THE BOT'S TOKEN GOES HERE")
 else:
     bot.run('NDU2NTMwOTY2MzM3NTUyNDE1.DgN4aQ.ZRF8_sWj2V6_S25aSMiSV7SeQ7E')
-
-if __name__ == "__main__":
