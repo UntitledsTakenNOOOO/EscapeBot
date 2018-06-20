@@ -24,8 +24,7 @@ from copy import deepcopy
 from gameplayer import GamePlayer
 from itemrole import ItemRole
 from gamerole import GameRole
-from lesketon import NonPlayerError
-from lesketon import bot
+import lesketon
 
 
 class GameMaster:
@@ -73,7 +72,7 @@ class GameMaster:
             print(id, self.players)
             if mentioncheck:
                 return None
-            raise NonPlayerError
+            raise lesketon.NonPlayerError
         return self.players[id]
 
     def add_player(self, player):
@@ -89,9 +88,9 @@ class GameMaster:
         """
         for player in self.players:
             if role.role in self.players[player].player.roles:
-                await bot.remove_roles(self.players[player].player, role.role)
+                await lesketon.bot.remove_roles(self.players[player].player, role.role)
 
     async def mass_give_role(self, role):
         for player in self.players:
             if role.role not in self.players[player].player.roles:
-                await bot.add_roles(self.players[player].player, role.role)
+                await lesketon.bot.add_roles(self.players[player].player, role.role)

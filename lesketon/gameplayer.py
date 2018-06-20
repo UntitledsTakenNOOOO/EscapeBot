@@ -23,7 +23,7 @@ import aiohttp
 from copy import deepcopy
 from itemrole import ItemRole
 from gamerole import GameRole
-from lesketon import bot
+import lesketon
 
 
 class GamePlayer:
@@ -91,13 +91,13 @@ class GamePlayer:
 
     async def give_item(self, item, recip):
         """ Assumes checks have been made! This can be altered to not do so. """
-        await bot.remove_roles(self.player, item)
-        await bot.add_roles(recip.player, item)
+        await lesketon.bot.remove_roles(self.player, item)
+        await lesketon.bot.add_roles(recip.player, item)
 
     async def get_role(self, role):
         if role not in self.player.roles:
-            await bot.add_roles(self.player, role)
+            await lesketon.bot.add_roles(self.player, role)
 
     async def remove_role(self, role):
         if role in self.player.roles:
-            await bot.remove_roles(self.player, role)
+            await lesketon.bot.remove_roles(self.player, role)
