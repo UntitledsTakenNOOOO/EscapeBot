@@ -171,8 +171,7 @@ class botcommand:
         func2 = self.cfunc(func)
         while self.waiting:
             try:
-                msg = await
-                bot.wait_for_message(author=self.author, check=func2)
+                msg = await bot.wait_for_message(author=self.author, check=func2)
                 if self.active and not self.ended:
                     self.waiting = False
                     return (func(msg, *args))
@@ -201,8 +200,7 @@ class botcommand:
         self.waiting = True
         while self.waiting:
             try:
-                msg = await
-                bot.wait_for_message(author=self.author, check=self.ccheck)
+                msg = await bot.wait_for_message(author=self.author, check=self.ccheck)
                 if self.active and not self.ended:
                     self.waiting = False
                     return (msg.content)
@@ -224,11 +222,9 @@ class botcommand:
                 for x in range(4):
                     try:
                         try:
-                            await
-                            bot.send_message(self.author, string)
+                            await bot.send_message(self.author, string)
                         except discord.Forbidden:
-                            await
-                            bot.send_message(self.channel, string)
+                            await bot.send_message(self.channel, string)
                         said = True
                         if update and self.player:
                             self.player.updateMessage(string)
@@ -236,8 +232,7 @@ class botcommand:
                     except (discord.HTTPException, OSError, aiohttp.ClientResponseError) as e:
                         print("Suffered", type(e), "error in botcommand.pm().")
                         print("info: ", string, self.player.id)
-                        await
-                        asyncio.sleep(x ** x)
+                        await asyncio.sleep(x ** x)
                 self.end()
                 raise CommandEndedError
             else:
@@ -252,8 +247,7 @@ class botcommand:
             if not self.ended:
                 for x in range(4):
                     try:
-                        msg = await
-                        bot.send_message(self.channel, string)
+                        msg = await bot.send_message(self.channel, string)
                         said = True
                         if update and self.player:
                             self.player.updateMessage(string)
@@ -261,8 +255,7 @@ class botcommand:
                     except (discord.HTTPException, OSError, aiohttp.ClientResponseError) as e:
                         print("Suffered", type(e), "error in botcommand.say().")
                         print("info: ", string, self.channel.name, self.player.id)
-                        await
-                        asyncio.sleep(x ** x)
+                        await asyncio.sleep(x ** x)
                 self.end()
                 raise CommandEndedError
             else:
@@ -275,15 +268,13 @@ class botcommand:
             if not self.ended:
                 for x in range(5):
                     try:
-                        msg = await
-                        bot.send_message(self.channel, string)
+                        msg = await bot.send_message(self.channel, string)
                         self.end()
                         return
                     except (discord.HTTPException, OSError, aiohttp.ClientResponseError) as e:
                         print("Suffered", type(e), "error in botcommand.esay().")
                         print("info: ", string, self.channel.name, self.player.id)
-                        await
-                        asyncio.sleep(x ** x)
+                        await asyncio.sleep(x ** x)
                 self.end()
             else:
                 raise CommandEndedError
@@ -292,8 +283,7 @@ class botcommand:
         """
         as esay, but always 'Done.'
         """
-        await
-        self.esay("Done.")
+        await self.esay("Done.")
 
     def end(self):
         self.waiting = False
@@ -309,8 +299,7 @@ class botcommand:
 
     async def timeOut(self, dur):
         self.pause()
-        await
-        asyncio.sleep(dur)
+        await asyncio.sleep(dur)
         self.resume()
 
 
@@ -439,24 +428,20 @@ else:
 @bot.event
 async def on_command_error(error, ctx):  # ask me if you need this explained
     if isinstance(error, commands.NoPrivateMessage):
-        await
-        bot.send_message(ctx.message.author,
+        await bot.send_message(ctx.message.author,
                          'This command cannot be used in private messages.')
     elif isinstance(error, commands.DisabledCommand):
-        await
-        bot.send_message(ctx.message.author,
+        await bot.send_message(ctx.message.author,
                          'Sorry. This command is disabled and cannot be used.')
     elif isinstance(error, commands.CheckFailure):
         if error.silent:
             return
         if error.msg:
-            await
-            bot.send_message(ctx.message.channel, error.msg)
+            await bot.send_message(ctx.message.channel, error.msg)
         else:
             player = botv.gm.players[ctx.message.author.id]
             msg = player.in_command_msg(ctx.message.channel)
-            await
-            bot.send_message(ctx.message.channel, msg)
+            await bot.send_message(ctx.message.channel, msg)
     elif isinstance(error, commands.CommandInvokeError):
         print('In {0.command.qualified_name}:'.format(ctx), file=sys.stderr)
         traceback.print_tb(error.original.__traceback__)
@@ -527,8 +512,7 @@ async def on_message(message):
         else:
             c = message.content.lower()
         message.content = c
-    await
-    bot.process_commands(message)
+    await bot.process_commands(message)
 
 
 """BASIC COMMANDS EXAMPLES"""
@@ -541,26 +525,16 @@ async def hello(ctx):
     bot.say() only works within the bot.command() wrapper, so under normal circumstances, you'll
     want to pass channel down into any other function and use bot.send_message().
     """
-    await
-    bot.say("Hello, {}.".format(ctx.message.author.name))  # These two are equivalent within a bot.command
-    await
-    bot.send_message(ctx.message.channel, "I heard you.")  # These two are equivalent within a bot.command
-    await
-    asyncio.sleep(1)  # This can be used to pause for X time, in this case 1 second
-    msg = await
-    bot.send_message(ctx.message.author, "You can also do this.")
-    await
-    asyncio.sleep(1)
-    await
-    bot.delete_message(msg)  # bot.say and bot.send_message create message objects which you can do things with
-    msg = await
-    bot.send_message(ctx.message.author, "Too slow, it's gone.")
-    await
-    asyncio.sleep(5)
-    await
-    bot.edit_message(msg, msg.content + " But here's a consolation prize.")
-    await
-    bot.add_reaction(ctx.message, '👍')  # you can do the same stuff to the ctx.message object
+    await bot.say("Hello, {}.".format(ctx.message.author.name))  # These two are equivalent within a bot.command
+    await bot.send_message(ctx.message.channel, "I heard you.")  # These two are equivalent within a bot.command
+    await asyncio.sleep(1)  # This can be used to pause for X time, in this case 1 second
+    msg = await bot.send_message(ctx.message.author, "You can also do this.")
+    await asyncio.sleep(1)
+    await bot.delete_message(msg)  # bot.say and bot.send_message create message objects which you can do things with
+    msg = await bot.send_message(ctx.message.author, "Too slow, it's gone.")
+    await asyncio.sleep(5)
+    await bot.edit_message(msg, msg.content + " But here's a consolation prize.")
+    await bot.add_reaction(ctx.message, '👍')  # you can do the same stuff to the ctx.message object
 
 
 @bot.command(pass_context=True, aliases=["go away", "begone"])
@@ -571,8 +545,7 @@ async def leave(ctx, *, check=""):
     #    if botv.isAdmin(ctx.message.author) and check == "now, bot":
     # if necessary, save checks can go here; check presently commented out because botv can
     # fail to initialize in testing
-    await
-    bot.say("Allan, please add dialogue!")
+    await bot.say("Allan, please add dialogue!")
     quit()
 
 
@@ -592,28 +565,21 @@ async def listroles():
                 fstr += " (appears to be an item role)"
         fstr += "\n"
     fstr += "```"
-    await
-    bot.say(fstr)
+    await bot.say(fstr)
 
 
 @bot.command(pass_context=True)
 async def basicynprompt(ctx):
-    await
-    bot.say("Are you going to answer this question with 'n'? *(y/n)*")
-    msg = await
-    bot.wait_for_message(  # There's a much better way to handle this, with a wrapper
+    await bot.say("Are you going to answer this question with 'n'? *(y/n)*")
+    msg = await bot.wait_for_message(  # There's a much better way to handle this, with a wrapper
         author=ctx.message.author, channel=ctx.message.channel, check=yncheck
     )  # But this is the basic functionality
     if msg.content == 'y':
-        await
-        bot.say("**Liar.**")
-        await
-        bot.add_reaction(msg, '🇳')
+        await bot.say("**Liar.**")
+        await bot.add_reaction(msg, '🇳')
     else:
-        await
-        bot.say("**You fool.**")
-        await
-        bot.add_reaction(msg, '🇾')
+        await bot.say("**You fool.**")
+        await bot.add_reaction(msg, '🇾')
 
 
 # Now, to test basic functionality...
@@ -621,8 +587,7 @@ async def basicynprompt(ctx):
 @bot.command(pass_context=True)
 async def addplayer(ctx):
     if not botv.isAdmin(ctx.message.author):
-        await
-        bot.say("You are not set as an admin.")
+        await bot.say("You are not set as an admin.")
         return
     else:
         fstr = "Added {} players to current session:\n"
@@ -631,47 +596,36 @@ async def addplayer(ctx):
             fcount += 1
             botv.gm.add_player(player)
             fstr += player.name + "(" + player.id + ")\n"
-        await
-        bot.say(fstr.format(fcount))
+        await bot.say(fstr.format(fcount))
 
 
 @bot.command(pass_context=True)
 async def basicbotcommand(ctx):
     bc = botcommand(ctx, gcTestCommand)
-    await
-    bc.esay("Working as intended.")
+    await bc.esay("Working as intended.")
 
 
 @bot.command(pass_context=True)
 async def nonbasicbotcommand(ctx):
     bc = botcommand(ctx, gcTestCommand)
-    await
-    bc.say("Can you target this command with Wasteland? *(y/n)*")
+    await bc.say("Can you target this command with Wasteland? *(y/n)*")
     score = 0
-    yn = await
-    bc.menu(yncheck, True)
+    yn = await bc.menu(yncheck, True)
     if yn:
         score += 1
-        await
-        bc.say("Correct. Does Early Harvest untap this command? *(y/n)*")
+        await bc.say("Correct. Does Early Harvest untap this command? *(y/n)*")
     else:
-        await
-        bc.say("Incorrect. Does Early Harvest untap this command? *(y/n)*")
-    yn = await
-    bc.menu(yncheck, True)
+        await bc.say("Incorrect. Does Early Harvest untap this command? *(y/n)*")
+    yn = await bc.menu(yncheck, True)
     if yn:
-        await
-        bc.say("Incorrect. Your score is {}.".format(score))
+        await bc.say("Incorrect. Your score is {}.".format(score))
     else:
         score += 1
-        await
-        bc.say("Correct. Your score is {}.".format(score))
+        await bc.say("Correct. Your score is {}.".format(score))
     if not score:
-        await
-        bc.say("As punishment, you will be stuck in this command forever...")
+        await bc.say("As punishment, you will be stuck in this command forever...")
     else:
-        await
-        bc.pm("Thank you for playing.")
+        await bc.pm("Thank you for playing.")
         bc.end()
 
 
@@ -684,17 +638,13 @@ async def getitem(ctx):
             for item in botv.itemroles:
                 print(item)
             if role in botv.itemroles:
-                await
-                bc.player.getRole(role)
-                await
-                bc.say('Got item: \"{}!"'.format(role.name))
+                await bc.player.getRole(role)
+                await bc.say('Got item: \"{}!"'.format(role.name))
             else:
-                await
-                bc.say('{} doesn\'t appear to be an item role.'.format(role.name))
+                await bc.say('{} doesn\'t appear to be an item role.'.format(role.name))
         bc.end()
     else:
-        await
-        bc.esay("No role mentions found.")
+        await bc.esay("No role mentions found.")
 
 
 @bot.command(pass_context=True)
@@ -706,17 +656,13 @@ async def loseitem(ctx):
             for item in botv.itemroles:
                 print(item)
             if role in botv.itemroles:
-                await
-                bc.player.removeRole(role)
-                await
-                bc.say('Removed item: \"{}!"'.format(role.name))
+                await bc.player.removeRole(role)
+                await bc.say('Removed item: \"{}!"'.format(role.name))
             else:
-                await
-                bc.say('{} doesn\'t appear to be an item role.'.format(role.name))
+                await bc.say('{} doesn\'t appear to be an item role.'.format(role.name))
         bc.end()
     else:
-        await
-        bc.esay("No role mentions found.")
+        await bc.esay("No role mentions found.")
 
 
 @bot.command(pass_context=True)
@@ -725,28 +671,21 @@ async def giveitem(ctx):
     player = bc.player
     if bc.mentions:
         if not player.items:
-            await
-            bc.esay("You have nothing to give.")
+            await bc.esay("You have nothing to give.")
             return
         recip = bc.mentions[0]
-        await
-        bc.say("What would you like to give them?" + player.itemlist())
-        n = await
-        bc.menu(numeralcheck, True)
+        await bc.say("What would you like to give them?" + player.itemlist())
+        n = await bc.menu(numeralcheck, True)
         if n > len(player.items):
-            await
-            bc.esay("You don't have that many items.")
+            await bc.esay("You don't have that many items.")
         elif n:
             item = player.items[n - 1]
-            await
-            player.giveItem(item, recip)
-            await
-            bc.esay("Given item {} to {}!".format(item.name, recip.player.name))
+            await player.giveItem(item, recip)
+            await bc.esay("Given item {} to {}!".format(item.name, recip.player.name))
         else:
             bc.dsay()
     else:
-        await
-        bc.esay("You need to mention a player to give an item to.")
+        await bc.esay("You need to mention a player to give an item to.")
 
 
 @bot.command(pass_context=True)
