@@ -89,11 +89,9 @@ class GameMaster:
         """
         for player in self.players:
             if role.role in self.players[player].player.roles:
-                await
-                bot.remove_roles(self.players[player].player, role.role)
+                await bot.remove_roles(self.players[player].player, role.role)
 
     async def mass_give_role(self, role):
         for player in self.players:
             if role.role not in self.players[player].player.roles:
-                await
-                bot.add_roles(self.players[player].player, role.role)
+                await bot.add_roles(self.players[player].player, role.role)
