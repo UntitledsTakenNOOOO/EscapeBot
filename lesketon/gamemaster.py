@@ -21,11 +21,11 @@ import logging
 import shutil
 import aiohttp
 from copy import deepcopy
-from .gameplayer import GamePlayer
-from .itemrole import ItemRole
-from .gamerole import GameRole
-from .lesketon import NonPlayerError
-from .lesketon import bot
+from gameplayer import GamePlayer
+from itemrole import ItemRole
+from gamerole import GameRole
+from lesketon import NonPlayerError
+from lesketon import bot
 
 
 class GameMaster:

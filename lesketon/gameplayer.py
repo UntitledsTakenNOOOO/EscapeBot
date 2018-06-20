@@ -21,9 +21,9 @@ import logging
 import shutil
 import aiohttp
 from copy import deepcopy
-from .itemrole import ItemRole
-from .gamerole import GameRole
-from .lesketon import bot
+from itemrole import ItemRole
+from gamerole import GameRole
+from lesketon import bot
 
 
 class GamePlayer:

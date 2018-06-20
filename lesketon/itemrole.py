@@ -21,7 +21,7 @@ import logging
 import shutil
 import aiohttp
 from copy import deepcopy
-from .gamerole import GameRole
+from gamerole import GameRole
 
 
 class ItemRole(GameRole):
