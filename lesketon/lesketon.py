@@ -25,6 +25,7 @@ from gamerole import GameRole
 from itemrole import ItemRole
 from gameplayer import GamePlayer
 from gamemaster import GameMaster
+from gameroom import GameRoom
 
 
 
