@@ -25,6 +25,7 @@ from itemrole import ItemRole
 from gamerole import GameRole
 
 
+
 class GamePlayer:
     def __init__(self, player):
         self.id = player.id
@@ -59,7 +60,8 @@ class GamePlayer:
     def items(self):
         fl = []
         for role in self.player.roles:
-            if role in botv.itemroles:
+            import lesketon #I'm pretty sure we're going to hell for this but whatever.
+            if role in lesketon.botv.itemroles:
                 fl.append(role)
         return fl
 
@@ -100,6 +102,3 @@ class GamePlayer:
     async def remove_role(self, role):
         if role in self.player.roles:
             await lesketon.bot.remove_roles(self.player, role)
-
-
-import lesketon

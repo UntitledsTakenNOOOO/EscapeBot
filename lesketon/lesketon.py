@@ -257,7 +257,7 @@ class botcommand:
                         msg = await bot.send_message(self.channel, string)
                         said = True
                         if update and self.player:
-                            self.player.updateMessage(string)
+                            self.player.update_message(string)
                         return
                     except (discord.HTTPException, OSError, aiohttp.ClientResponseError) as e:
                         print("Suffered", type(e), "error in botcommand.say().")
@@ -273,7 +273,7 @@ class botcommand:
         said = False
         while not said:
             if not self.ended:
-                for x in range(5):
+                for x in range(5):~
                     try:
                         msg = await bot.send_message(self.channel, string)
                         self.end()
@@ -336,10 +336,9 @@ class botvars:
             self.server = "450764095260590080"
             self.ver = "0.0.0.1"
             self.admins = ['135561916566208512', '135574344712716288', '110204920719785984']
-            self.accessroles = ['452924247254499348', '452924249796247552', '452924250802749440', '452924251691941888',
-                                '452924252178350084']
-            self.itemroles = ['456681710646460431']
-            self.rooms = ['456673884222259212']
+            self.accessroles = ['459158402824929290'] #just one access role now; will change permissions over the course of the game.
+            self.itemroles = ['459160244514455555']
+            self.rooms = ['459157237164802083', '459157281523761193']
         self.deserialize()
 
     def save(self):
@@ -473,6 +472,8 @@ async def on_ready():
     print('Loading static/persistent variables.')
     botv = botvars(test="-test" in sys.argv)
     botv.gm.deserialize()
+    for role in botv.server.roles:
+    	print(role.name, role.id)
     print('Creating session.')
     print('------')
     # if you want to set a test version of the bot, this lets you
@@ -565,10 +566,10 @@ async def listroles():
         n += 1
         fstr += str(n) + " - " + role.name
         for accessrole in botv.accessroles:
-            if role == accessrole.role:
+            if role == accessrole:
                 fstr += " (appears to be an access role)"
         for ItemRole in botv.itemroles:
-            if role == ItemRole.role:
+            if role == ItemRole:
                 fstr += " (appears to be an item role)"
         fstr += "\n"
     fstr += "```"
@@ -681,7 +682,7 @@ async def giveitem(ctx):
             await bc.esay("You have nothing to give.")
             return
         recip = bc.mentions[0]
-        await bc.say("What would you like to give them?" + player.itemlist())
+        await bc.say("What would you like to give them?" + player.item_list())
         n = await bc.menu(numeralcheck, True)
         if n > len(player.items):
             await bc.esay("You don't have that many items.")
@@ -703,4 +704,4 @@ async def ready(ctx):
 if '-test' in sys.argv:
     bot.run("TEST VERSION OF THE BOT'S TOKEN GOES HERE")
 else:
-    bot.run(token)
+    bot.run(token) #I still find it funny that people actually trawl github for insecure discord bots that often.

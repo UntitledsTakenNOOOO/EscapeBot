@@ -27,8 +27,19 @@ class GameRoom:
     """
     This is the GameRoom class.
 
-    This Docstring should be fully detailed when this class is actually more than just a blank constructor.
+    Contains an ID (its snowflake) for access purposes, a (potentially empty) list of items,
+    and a function that could correspond to any number of puzzles relevant to the room.
     """
 
-    def __init__(self):
-        # I don't know what the constructor needs rn
+    def __init__(self, id, description, items, fixtures, func):
+        #you can take items, fixtures are room objects you can examine or use.
+        self.id = id
+        self.description = description
+        self.items = items
+        self.fixtures = fixtures
+        self.func = func
+
+    def run(self, *args):
+    	#takes whatever function we pass it, which will be one of many puzzles.
+        self.func(args)
+
