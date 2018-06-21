@@ -27,9 +27,11 @@ from gamerole import GameRole
 
 
 class GamePlayer:
-    def __init__(self, player):
+    def __init__(self, player, botv, bot):
         self.id = player.id
         self.player = player
+        self.botv = botv
+        self.bot = bot
         self.set_defaults()
 
     def set_defaults(self):
@@ -58,10 +60,9 @@ class GamePlayer:
 
     @property
     def items(self):
-        global botv
         fl = []
         for role in self.player.roles:
-            if role in botv.itemroles:
+            if role in self.botv.itemroles:
                 fl.append(role)
         return fl
 
@@ -92,13 +93,16 @@ class GamePlayer:
 
     async def give_item(self, item, recip):
         """ Assumes checks have been made! This can be altered to not do so. """
-        await lesketon.bot.remove_roles(self.player, item)
-        await lesketon.bot.add_roles(recip.player, item)
+        await self.bot.remove_roles(self.player, item)
+        await self.bot.add_roles(recip.player, item)
 
     async def get_role(self, role):
         if role not in self.player.roles:
-            await lesketon.bot.add_roles(self.player, role)
+            await self.bot.add_roles(self.player, role)
 
     async def remove_role(self, role):
         if role in self.player.roles:
-            await lesketon.bot.remove_roles(self.player, role)
+            await self.bot.remove_roles(self.player, role)
+
+
+import lesketon

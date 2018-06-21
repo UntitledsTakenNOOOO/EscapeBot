@@ -273,7 +273,7 @@ class botcommand:
         said = False
         while not said:
             if not self.ended:
-                for x in range(5):~
+                for x in range(5):
                     try:
                         msg = await bot.send_message(self.channel, string)
                         self.end()
@@ -688,7 +688,10 @@ async def giveitem(ctx):
             await bc.esay("You don't have that many items.")
         elif n:
             item = player.items[n - 1]
-            await player.give_item(item, recip)
+            if (player == recip):
+                await bc.esay("You pass the {} from one hand to the other. Nice one.".format(item.name, ))
+            else:
+                await player.give_item(item, recip)
             await bc.esay("Given item {} to {}!".format(item.name, recip.player.name))
         else:
             bc.dsay()

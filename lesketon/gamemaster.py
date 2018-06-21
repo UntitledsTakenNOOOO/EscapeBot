@@ -76,7 +76,7 @@ class GameMaster:
 
     def add_player(self, player):
         if player.id not in self.players:
-            self.players[player.id] = GamePlayer(player)
+            self.players[player.id] = GamePlayer(player, self.botv, lesketon.bot)
             return "New player ({}) successfully added.".format(player.id)
         else:
             return "Player of id {} already registered.".format(player.id)
