@@ -58,10 +58,10 @@ class GamePlayer:
 
     @property
     def items(self):
+        global botv
         fl = []
         for role in self.player.roles:
-            import lesketon #I'm pretty sure we're going to hell for this but whatever.
-            if role in lesketon.botv.itemroles:
+            if role in botv.itemroles:
                 fl.append(role)
         return fl
 

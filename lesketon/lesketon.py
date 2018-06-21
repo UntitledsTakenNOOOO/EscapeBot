@@ -123,7 +123,7 @@ class botcommand:
         if self.player.incommand:
             raise InCommandError
         if ctype.interrupts:
-            self.player.startCommand(self)
+            self.player.start_command(self)
         alist = ctx.message.content.split(' ')[1:]
         for obj in alist:
             a = botv.gm.get_player(re.sub(r'[<@!>]', '', obj), mentioncheck=True)
@@ -646,7 +646,7 @@ async def getitem(ctx):
             for item in botv.itemroles:
                 print(item)
             if role in botv.itemroles:
-                await bc.player.getRole(role)
+                await bc.player.get_role(role)
                 await bc.say('Got item: \"{}!"'.format(role.name))
             else:
                 await bc.say('{} doesn\'t appear to be an item role.'.format(role.name))
@@ -664,7 +664,7 @@ async def loseitem(ctx):
             for item in botv.itemroles:
                 print(item)
             if role in botv.itemroles:
-                await bc.player.removeRole(role)
+                await bc.player.remove_role(role)
                 await bc.say('Removed item: \"{}!"'.format(role.name))
             else:
                 await bc.say('{} doesn\'t appear to be an item role.'.format(role.name))
@@ -688,7 +688,7 @@ async def giveitem(ctx):
             await bc.esay("You don't have that many items.")
         elif n:
             item = player.items[n - 1]
-            await player.giveItem(item, recip)
+            await player.give_item(item, recip)
             await bc.esay("Given item {} to {}!".format(item.name, recip.player.name))
         else:
             bc.dsay()
