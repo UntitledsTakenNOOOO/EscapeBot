@@ -692,7 +692,7 @@ async def giveitem(ctx):
                 await bc.esay("You pass the {} from one hand to the other. Nice one.".format(item.name, ))
             else:
                 await player.give_item(item, recip)
-            await bc.esay("Given item {} to {}!".format(item.name, recip.player.name))
+            await bc.esay("Gave the {} to {}!".format(item.name, recip.player.name))
         else:
             bc.dsay()
     else:
