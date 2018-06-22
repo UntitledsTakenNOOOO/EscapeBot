@@ -22,7 +22,6 @@ import shutil
 import aiohttp
 from copy import deepcopy
 
-
 class GameRoom:
     """
     This is the GameRoom class.
@@ -31,15 +30,25 @@ class GameRoom:
     and a function that could correspond to any number of puzzles relevant to the room.
     """
 
-    def __init__(self, id, description, items, fixtures, func):
-        #you can take items, fixtures are room objects you can examine or use.
-        self.id = id
-        self.description = description
-        self.items = items
-        self.fixtures = fixtures
-        self.func = func
+
+    def __init__(self, pdict):
+        self.id = pdict['id']
+        self.set_defaults()
+        if 'desc' in pdict:
+        	self.desc = pdict['desc']
+        if 'items' in pdict:
+            self.items = pdict['items']
+        if 'fixtures' in pdict:
+            self.fixtures = pdict['fixtures']
+        if 'puzzlefuncs' in pdict:
+            self.puzzlefuncs = pdict['puzzlefuncs']
+    
+    def set_defaults(self):
+        (self.desc, self.items, self.fixtures, self.puzzlefuncts) = ('You\'re fired, Allan.', None, None, None)
 
     def run(self, *args):
     	#takes whatever function we pass it, which will be one of many puzzles.
-        self.func(args)
+        self.puzzlefuncs(args)
 
+
+import lesketon

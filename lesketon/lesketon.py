@@ -109,6 +109,7 @@ class nointerruptcommand(gamecommand):
 
 
 gcTestCommand = gamecommand("Test Command", False)
+gcExamine = gamecommand("Examine", True)
 gcGetItem = nointerruptcommand("Get Item", True)
 
 
@@ -138,6 +139,7 @@ class botcommand:
         self.author = ctx.message.author
         self.id = ctx.message.author.id
         self.channel = ctx.message.channel
+        self.gameroom = botv.gm.rooms[ctx.message.channel.id]
         self.ispm = False
         if self.channel.is_private:
             self.ispm = True
@@ -296,7 +298,7 @@ class botcommand:
         self.waiting = False
         self.ended = True
         if self.player.incommand == self:
-            self.player.setdefaults()
+            self.player.set_defaults()
 
     def pause(self):
         self.active = False
@@ -338,7 +340,8 @@ class botvars:
             self.admins = ['135561916566208512', '135574344712716288', '110204920719785984']
             self.accessroles = ['459158402824929290'] #just one access role now; will change permissions over the course of the game.
             self.itemroles = ['459160244514455555']
-            self.rooms = ['459157237164802083', '459157281523761193']
+            self.rooms = ({'id':'459157237164802083', 'desc': 'There\'s nothing in this room except a sign that denotes the entrance to the practice room, but I applaud you for your thoroughness.'},
+             {'id': '459157281523761193'})
         self.deserialize()
 
     def save(self):
@@ -689,7 +692,7 @@ async def giveitem(ctx):
         elif n:
             item = player.items[n - 1]
             if (player == recip):
-                await bc.esay("You pass the {} from one hand to the other. Nice one.".format(item.name, ))
+                await bc.esay("You pass the {} from one hand to the other. Nice one.".format(item.name))
             else:
                 await player.give_item(item, recip)
             await bc.esay("Gave the {} to {}!".format(item.name, recip.player.name))
@@ -700,11 +703,23 @@ async def giveitem(ctx):
 
 @bot.command(pass_context=True)
 async def ready(ctx):
-    bc = botcommand(ctx)
+    bc = botcommand(ctx, gcTestCommand)
     player = bc.player
     player.ready = not player.ready
+
+@bot.command(pass_context=True)
+async def examine(ctx):
+    bc = botcommand(ctx, gcExamine)
+    await bc.esay(bc.gameroom.desc)
+
 
 if '-test' in sys.argv:
     bot.run("TEST VERSION OF THE BOT'S TOKEN GOES HERE")
 else:
     bot.run(token) #I still find it funny that people actually trawl github for insecure discord bots that often.
+
+
+
+
+
+

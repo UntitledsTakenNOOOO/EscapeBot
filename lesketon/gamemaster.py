@@ -24,6 +24,7 @@ from copy import deepcopy
 from gameplayer import GamePlayer
 from itemrole import ItemRole
 from gamerole import GameRole
+from gameroom import GameRoom
 
 
 class GameMaster:
@@ -53,7 +54,9 @@ class GameMaster:
             self.players = {}
         self.accessroles = list(self.botv.accessroles)
         self.itemroles = list(self.botv.itemroles)
-        self.rooms = list(self.botv.rooms)
+        self.rooms = {}
+        for room in self.botv.rooms:
+            self.rooms[room['id']] = GameRoom(room)
         self.server = botv.server
 
     def deserialize(self):
