@@ -339,9 +339,17 @@ class botvars:
             self.ver = "0.0.0.1"
             self.admins = ['135561916566208512', '135574344712716288', '110204920719785984']
             self.accessroles = ['459158402824929290'] #just one access role now; will change permissions over the course of the game.
-            self.itemroles = ['459160244514455555']
+            self.itemroles = ['459160244514455555', '460634297989201920', '460634321296818179']
+            #INTRO ROOM
+            #Fixtures: none
+            #Items: none
+            #Puzzles: none
             self.rooms = ({'id':'459157237164802083', 'desc': 'There\'s nothing in this room except a sign that denotes the entrance to the practice room, but I applaud you for your thoroughness.'},
-             {'id': '459157281523761193'})
+            #PRACTICE ROOM
+            #Fixtures: Light Switch (Can be flipped on/off), Footlocker
+            #Items: Rubik's Cube (can be solved), Small Key, Small Pin
+            #Puzzles: use Rubik's cube to solve it; use Small key to open Footlocker; use Small Pin to attach it to your shirt and consume it.
+             {'id': '459157281523761193', 'desc': 'You and your group make your way into the conveniently labeled practice room, a small and largely empty space without much going for it aside from the table at its centre and a light switch on the wall opposite the door.' })
         self.deserialize()
 
     def save(self):

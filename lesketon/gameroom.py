@@ -36,10 +36,10 @@ class GameRoom:
         self.set_defaults()
         if 'desc' in pdict:
         	self.desc = pdict['desc']
-        if 'items' in pdict:
-            self.items = pdict['items']
         if 'fixtures' in pdict:
             self.fixtures = pdict['fixtures']
+        if 'items' in pdict:
+            self.items = pdict['items']
         if 'puzzlefuncs' in pdict:
             self.puzzlefuncs = pdict['puzzlefuncs']
     
