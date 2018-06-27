@@ -26,6 +26,7 @@ from itemrole import ItemRole
 from gameplayer import GamePlayer
 from gamemaster import GameMaster
 from gameroom import GameRoom
+from gameroom import Fixture
 
 
 
@@ -344,12 +345,16 @@ class botvars:
             #Fixtures: none
             #Items: none
             #Puzzles: none
-            self.rooms = ({'id':'459157237164802083', 'desc': 'There\'s nothing in this room except a sign that denotes the entrance to the practice room, but I applaud you for your thoroughness.'},
+            self.rooms = ({'id':'459157237164802083', 
+                'desc': 'There\'s nothing in this room except a sign that denotes the entrance to the practice room, but I applaud you for your thoroughness.'},
             #PRACTICE ROOM
             #Fixtures: Light Switch (Can be flipped on/off), Footlocker
             #Items: Rubik's Cube (can be solved), Small Key, Small Pin
             #Puzzles: use Rubik's cube to solve it; use Small key to open Footlocker; use Small Pin to attach it to your shirt and consume it.
-             {'id': '459157281523761193', 'desc': 'You and your group make your way into the conveniently labeled practice room, a small and largely empty space without much going for it aside from the table at its centre and a light switch on the wall opposite the door.' })
+             {'id': '459157281523761193', 
+             'desc': 'You and your group make your way into the conveniently labeled practice room, a small and largely empty space without much going for it aside from the table at its centre and a light switch on the wall opposite the door.', 
+             'fixtures': 'light switch',
+             'items': ['small key', 'rubik\'s cube']})
         self.deserialize()
 
     def save(self):
@@ -484,7 +489,7 @@ async def on_ready():
     botv = botvars(test="-test" in sys.argv)
     botv.gm.deserialize()
     for role in botv.server.roles:
-    	print(role.name, role.id)
+        print(role.name, role.id)
     print('Creating session.')
     print('------')
     # if you want to set a test version of the bot, this lets you
@@ -716,10 +721,38 @@ async def ready(ctx):
     player.ready = not player.ready
 
 @bot.command(pass_context=True)
-async def examine(ctx):
-    bc = botcommand(ctx, gcExamine)
-    await bc.esay(bc.gameroom.desc)
+async def examine(ctx, *, obj = ""):
+    bc = botcommand(ctx, ctExamine)
+    obj = obj.lower()
+    if not obj or obj == "room":
+        await bc.esay(bc.room.description)
+        return
+    elif obj in bc.gameroom.fixtures:
+        pass #just for now. keywords has gotta search for fixtures in the room.
 
+#------------------------------------------------------ROOM DATA INITIALIZED HERE------------------------------------------------------
+
+#PRACTICE ROOM VARIABLES
+#Light Switch
+async def light_switch_use(self, bc):
+    if self.misc_args == False:
+        await bc.esay("{} flicks the switch into the ON position. The LED beside it lights up.".format(bc.player.name))
+    else:
+        await bc.esay("{} flicks the switch into the OFF position. The LED beside it goes dark.".format(bc.player.name))
+    self.misc_args = not self.misc_args
+
+async def light_switch_examine(self, bc):
+    if self.misc_args == False:
+        await bc.esay("{} makes their way over to the light switch, and sees that it’s flipped into the ON position. Directly to its left is a lit LED.".format(bc.player.name))
+    else:
+        await bc.esay("{} makes their way over to the light switch, and sees that it’s flipped into the OFF position. Directly to its left is an unlit LED.".format(bc.player.name))
+
+
+light_switch = Fixture('Light Switch', light_switch_use, light_switch_examine, misc_args = False)
+
+
+
+#------------------------------------------------------------END ROOM DATA------------------------------------------------------------
 
 if '-test' in sys.argv:
     bot.run("TEST VERSION OF THE BOT'S TOKEN GOES HERE")

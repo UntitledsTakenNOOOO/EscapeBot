@@ -35,7 +35,7 @@ class GameRoom:
         self.id = pdict['id']
         self.set_defaults()
         if 'desc' in pdict:
-        	self.desc = pdict['desc']
+            self.desc = pdict['desc']
         if 'fixtures' in pdict:
             self.fixtures = pdict['fixtures']
         if 'items' in pdict:
@@ -50,5 +50,12 @@ class GameRoom:
     	#takes whatever function we pass it, which will be one of many puzzles.
         self.puzzlefuncs(args)
 
+class Fixture:
+
+    def __init__(self, name, use_func, examine_func, *, misc_args = None):
+        self.name = name
+        self.use_func = use_func
+        self.examine_func = examine_func
+        self.misc_args = misc_args
 
 import lesketon
